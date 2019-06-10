@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                   Column(
                     children: <Widget>[
                       Image.asset(
-                          'assets/logo.png', height: 150.0, width: 150.0,),
+                          'assets/logo.png', height: 150.0, width: 180.0,),
                       (loader) ? Center(child : new CircularProgressIndicator()) : SizedBox(height: 2.0),
                       /*Text('Log In', style: new TextStyle(fontSize: 20.0)),*/
                     ],
@@ -227,7 +227,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       loader = true;
     });
-    var islogin = await dologin.markAttByQR(qr);
+    var islogin = await dologin.markAttByQR(qr,context);
     print(islogin);
     if(islogin=="success"){
       setState(() {

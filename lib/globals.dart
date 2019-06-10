@@ -1,6 +1,9 @@
 import 'model/timeinout.dart';
-String path="http://192.168.0.200/ubiattendance/index.php/Att_services/";
-//String path="https://ubiattendance.ubihrm.com/index.php/Att_services/";
+//String path="http://192.168.0.200/vtltransport/index.php/Att_services/";
+//String loginpath="http://192.168.0.200/vtltransport";
+String loginpath="http://vtltransport.xyz";
+String path="http://vtltransport.xyz/vtltransport/index.php/Att_services/";
+//String path="https://vtl.ubiattendance.com/index.php/Att_services/";
 MarkTime mk1;
 String path_hrm_india="https://ubitech.ubihrm.com/services/"; // FOR LEAVE
 List<Map<String, double>> list = new List();

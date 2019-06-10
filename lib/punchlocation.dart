@@ -36,7 +36,13 @@ class PunchLocation extends StatefulWidget {
 class _PunchLocation extends State<PunchLocation> {
   StreamLocation sl = new StreamLocation();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final _clientname = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  //final _clientname = TextEditingController();
+  final _trailer = TextEditingController();
+  final _pro = TextEditingController();
+  final _start = TextEditingController();
+  final _finish = TextEditingController();
+  final _remarkin = TextEditingController();
   /*var _defaultimage =
       new NetworkImage("http://ubiattendance.ubihrm.com/assets/img/avatar.png");*/
   var profileimage;
@@ -78,6 +84,7 @@ class _PunchLocation extends State<PunchLocation> {
   String aid = "";
   String client='0';
   String shiftId = "";
+  String dropdownValue = 'DRP';
   List<Widget> widgets;
 
 
@@ -242,7 +249,6 @@ class _PunchLocation extends State<PunchLocation> {
             backgroundColor: Colors.teal,
             // backgroundColor: Color.fromARGB(255,63,163,128),
           ),
-
 
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentIndex,
@@ -469,7 +475,7 @@ class _PunchLocation extends State<PunchLocation> {
                   startTimer();
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
+                    MaterialPageRoute(builder: (context) => PunchLocation()),
                   );
                 },
               ),
@@ -484,30 +490,165 @@ class _PunchLocation extends State<PunchLocation> {
     if (act1 == "Poor network connection") {
       return poorNetworkWidget();
     } else {
-      return SafeArea(
-        child: ListView(
-          physics: NeverScrollableScrollPhysics(),
-          children: <Widget>[
-            Container(
-              // foregroundDecoration: BoxDecoration(color:Colors.red ),
-              height: MediaQuery.of(context).size.height * 0.80,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: MediaQuery.of(context).size.height * .06),
-                  //Image.asset('assets/logo.png',height: 150.0,width: 150.0),
-                  // SizedBox(height: 5.0),
-                  getClients_DD(),
-                  SizedBox(height: 35.0),
-                  SizedBox(height: MediaQuery.of(context).size.height * .01),
-                  // SizedBox(height: MediaQuery.of(context).size.height*.01),
-                  (act1 == '') ? loader() : getMarkAttendanceWidgit(),
-                ],
-              ),
+      //return new Expanded(
+        return new Container(
+          child: SafeArea(
+            child: Form(
+            key:_formKey,
+            child: ListView(
+              //scrollDirection: Axis.vertical,
+              physics:BouncingScrollPhysics(),
+              children: <Widget>[
+                Container(
+                  // foregroundDecoration: BoxDecoration(color:Colors.red ),
+                  height: MediaQuery.of(context).size.height * 0.90,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: MediaQuery.of(context).size.height * .02),
+                      //Image.asset('assets/logo.png',height: 150.0,width: 150.0),
+                      // SizedBox(height: 5.0),
+                      getClients_DD(),
+
+                      Container(
+                        child: TextFormField(
+                          controller: _pro,
+                          decoration: InputDecoration(
+                            labelText: 'Pro# (Optional)',
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.all(1.0),
+                              child: Icon(
+                                Icons.attachment,
+                                color: Colors.grey,
+                              ), // icon is 48px widget.
+                            ),
+                          ),
+                          /*validator: (String arg) {
+                            if(arg=='')
+                              return 'Project Number is mandatory';
+                            else
+                              return null;
+                          },*/
+                        ),
+                      ),
+                      Container(
+                        child: TextFormField(
+                          controller: _trailer,
+                          //keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            labelText: 'Trailer# (Optional)',
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.all(1.0),
+                              child: Icon(
+                                Icons.attachment,
+                                color: Colors.grey,
+                              ), // icon is 48px widget.
+                            ),
+                          ),
+                         /* validator: (String arg) {
+                            if(arg=='')
+                              return 'Trailer Number is mandatory';
+                            else
+                              return null;
+                          },*/
+                        ),
+                      ),
+                      action_DD(),
+                      //SizedBox(height: 10.0),
+                      //Text('Odometer Start',style: TextStyle(fontWeight: FontWeight.bold,fontSize:18.0),textAlign: TextAlign.left),
+
+                         /* Container(
+                            child:Padding(
+                              padding: const EdgeInsets.fromLTRB(5.0,5.0,5.0,0.0),
+                              child: TextFormField(
+                                controller: _start,
+                                keyboardType: TextInputType.number,
+                                //maxLength: 7,
+                                decoration: InputDecoration(
+                                  labelText: 'Odometer Start',
+                                  prefixIcon: Padding(
+                                padding: EdgeInsets.all(1.0),
+                                child: Icon(
+                                  Icons.attachment,
+                                  color: Colors.grey,
+                                ), // icon is 48px widget.
+                              ),
+                                ),
+                                validator: (String arg) {
+                                  if(arg=='')
+                                    return 'Odometer start is mandatory';
+                                  else
+                                    return null;
+                                },
+                              ),
+                            ),
+
+                          ),*/
+                        /*  Flexible(
+                            child:Padding(
+                              padding: const EdgeInsets.fromLTRB(5.0,5.0,5.0,0.0),
+                              child: TextFormField(
+                                controller: _finish,
+                                keyboardType: TextInputType.number,
+                                maxLength: 7,
+                                decoration: InputDecoration(
+                                  labelText: 'Finish',
+
+                                ),
+                                validator: (String arg) {
+                                  if(arg.length!=7)
+                                    return 'Odometer value must be of 7 digits';
+                                  else
+                                    return null;
+                                },
+                              ),
+                            ),
+
+                          ),*/
+
+
+                      Container(
+                        child:Padding(
+                          padding: const EdgeInsets.fromLTRB(5.0,5.0,5.0,0.0),
+                          child: TextFormField(
+                            controller: _remarkin,
+                            //keyboardType: TextInputType.number,
+                            //maxLength: 7,
+                            decoration: InputDecoration(
+                              labelText: 'Remarks (Optional)',
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(1.0),
+                                child: Icon(
+                                  Icons.attachment,
+                                  color: Colors.grey,
+                                ), // icon is 48px widget.
+                              ),
+                            ),
+                            /*validator: (String arg) {
+                              if(arg=='')
+                                return 'Odometer start is mandatory';
+                              else
+                                return null;
+                            },*/
+                          ),
+                        ),
+
+                      ),
+                      //SizedBox(height: 1.0),
+                      SizedBox(height: MediaQuery.of(context).size.height * .01),
+                      // SizedBox(height: MediaQuery.of(context).size.height*.01),
+                      (act1 == '') ? loader() : getMarkAttendanceWidgit(),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      );
+            ),
+          ),
+        );
+
+     // );
+
     }
   }
 
@@ -516,21 +657,15 @@ class _PunchLocation extends State<PunchLocation> {
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 35.0),
+           // SizedBox(height: 35.0),
             getwidget(location_addr1),
           ]),
     );
-
   }
   getwidget(String addrloc) {
     if (addrloc != "PermissionStatus.deniedNeverAsk") {
       return Column(children: [
-        ButtonTheme(
-          minWidth: 120.0,
-          height: 45.0,
-          child: getVisitInButton(),
-        ),
-        SizedBox(height: MediaQuery.of(context).size.height * .04),
+
         Container(
             color: Colors.teal.withOpacity(0.1),
             height: MediaQuery.of(context).size.height * .15,
@@ -542,7 +677,6 @@ class _PunchLocation extends State<PunchLocation> {
                     style: new TextStyle(fontSize: 14.0)),
                 onPressed: () {
                   launchMap(lat, long);
-
                 },
               ),
               new Center(
@@ -563,7 +697,7 @@ class _PunchLocation extends State<PunchLocation> {
                         sl.startStreaming(5);
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
+                          MaterialPageRoute(builder: (context) => PunchLocation()),
                         );
                       },
                     )
@@ -571,6 +705,12 @@ class _PunchLocation extends State<PunchLocation> {
                 ),
               ),
             ])),
+        SizedBox(height: MediaQuery.of(context).size.height * .02),
+        ButtonTheme(
+          minWidth: 120.0,
+          height: 45.0,
+          child: getVisitInButton(),
+        ),
       ]);
     } else {
       return Column(children: [
@@ -595,11 +735,34 @@ class _PunchLocation extends State<PunchLocation> {
           style: new TextStyle(fontSize: 22.0, color: Colors.white)),
       color: Colors.orangeAccent,
       onPressed: () {
-        if(_clientname.text=='') {
-          showInSnackBar('Please insert client name first');
-          return false;
-        }else
-          saveVisitImage();
+        if (_formKey.currentState.validate()) {
+         // print('client: ' + client);
+          //print(_trailer.text);
+          // if(_clientname.text=='') {
+          /*if (client == '0') {
+            showInSnackBar('Please insert client name first');
+            return false;
+          }*/ /*else if (_pro.text == '' || _pro.text == 0) {
+            showInSnackBar('Please insert Project number first');
+            return false;
+          } */
+         /* if (_trailer.text == '' || _trailer.text == '0') {
+            showInSnackBar('Please insert trailer first');
+            return false;
+          } else if (_start.text == '' || _start.text == '0') {
+            showInSnackBar('Please insert Odometer Start value');
+            return false;
+          }*/
+         /* else if (_finish.text == '' || _finish.text== '0') {
+            showInSnackBar('Please insert Odometer Finish value');
+            return false;
+          } else if (int.parse(_finish.text) <=int.parse(_start.text)) {
+            showInSnackBar('Odometer Start value can not be greater than finish value');
+            return false;
+          } */
+        // else
+            saveVisitImage();
+        }
       },
     );
   }
@@ -619,9 +782,9 @@ class _PunchLocation extends State<PunchLocation> {
 
   saveVisitImage() async {
     sl.startStreaming(5);
-    client = _clientname.text;
+   // client = _clientname.text;
     MarkVisit mk = new MarkVisit(
-        empid,client, streamlocationaddr, orgdir, lat, long);
+        empid,client, streamlocationaddr, orgdir, lat, long, _start.text,_finish.text,_pro.text,_trailer.text,dropdownValue,_remarkin.text);
     /* mk1 = mk;*/
 
     var connectivityResult = await (new Connectivity().checkConnectivity());
@@ -721,29 +884,91 @@ class _PunchLocation extends State<PunchLocation> {
 
 ////////////////////////////////////////////////////////////
   Widget getClients_DD() {
-
-    return Center(
-      child: Form(
-          child: TextFormField(
-            controller: _clientname,
-
-            keyboardType: TextInputType.text,
-
-            decoration: InputDecoration(
-                labelText: 'Client Name',
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(0.0),
-                  child: Icon(
-                    Icons.supervised_user_circle,
-                    color: Colors.grey,
-                  ), // icon is 48px widget.
-                )
+    return new FutureBuilder<List<Map>>(
+        future: getClientsDDList(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return new Container(
+              //    width: MediaQuery.of(context).size.width*.45,
+              child: InputDecorator(
+                decoration: InputDecoration(
+                  labelText: 'Client Name',
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.all(1.0),
+                    child: Icon(
+                      Icons.access_alarm,
+                      color: Colors.grey,
+                    ), // icon is 48px widget.
+                  ),
+                ),
+                child: new DropdownButton<String>(
+                  isDense: true,
+                  style: new TextStyle(fontSize: 15.0, color: Colors.black),
+                  value: client,
+                  onChanged: (String newValue) {
+                    setState(() {
+                      client = newValue;
+                    });
+                  },
+                  items: snapshot.data.map((Map map) {
+                    return new DropdownMenuItem<String>(
+                      value: map["Id"].toString(),
+                      child: new SizedBox(
+                          width: 200.0,
+                          child: new Text(
+                            map["Name"],
+                          )),
+                    );
+                  }).toList(),
+                ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return new Text("${snapshot.error}");
+          }
+          // return loader();
+          return new Center(
+            child: SizedBox(
+              child: CircularProgressIndicator(
+                strokeWidth: 2.2,
+              ),
+              height: 20.0,
+              width: 20.0,
             ),
-
+          );
+        });
+  }
+  Widget action_DD() {
+    return new Container(
+      //    width: MediaQuery.of(context).size.width*.45,
+      child: InputDecorator(
+        decoration: InputDecoration(
+          labelText: 'Choose Action',
+          prefixIcon: Padding(
+            padding: EdgeInsets.all(1.0),
+            child: Icon(
+              Icons.transfer_within_a_station,
+              color: Colors.grey,
+            ), // icon is 48px widget.
           ),
+        ),
+        child: DropdownButton<String>(
+          value: dropdownValue,
+          onChanged: (String newValue) {
+            setState(() {
+              dropdownValue = newValue;
+            });
+          },
+          items: <String>['DRP', 'PU', 'DEL', 'SWITCH']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
       ),
     );
-
   }
 ////////////////////////////////////////////////////////////
 }

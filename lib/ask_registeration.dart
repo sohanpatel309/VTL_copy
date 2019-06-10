@@ -54,7 +54,7 @@ class _AskRegisteration extends State<AskRegisteration> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            new Text("ubiAttendance", style: new TextStyle(fontSize: 20.0)),
+            new Text("VTLTransport", style: new TextStyle(fontSize: 20.0)),
           ],
         ),
         leading: IconButton(
@@ -87,7 +87,7 @@ class _AskRegisteration extends State<AskRegisteration> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          new Row(
+                         /* new Row(
                             children: <Widget>[
                               new Radio(
                                 activeColor: Colors.teal,
@@ -108,7 +108,7 @@ class _AskRegisteration extends State<AskRegisteration> {
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
-                          ),
+                          ),*/
                           add_org==true?new Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,6 +193,8 @@ class _AskRegisteration extends State<AskRegisteration> {
                                     validator: (value) {
                                       if (value.isEmpty) {
                                         return 'Please enter CRN';
+                                      }else if(value!='145371348'){
+                                        return 'Please enter correct CRN';
                                       }
                                     },
                                     decoration: const InputDecoration(
@@ -221,8 +223,7 @@ class _AskRegisteration extends State<AskRegisteration> {
                                           TextSpan(
                                               text:
                                               'CRN (Company Reference Number) is only available after company registration.'
-                                                  'You can get the CRN from mail sent to the admin( who has registered the company).'
-                                                  ' if company is not registered then',
+                                                  'You can get the CRN from mail sent to the admin( who has registered the company).',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black54)),

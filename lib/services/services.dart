@@ -187,7 +187,13 @@ List<Punch> createUserList(List data) {
     String longi_in = data[i]["longi"];
     String latit_out = data[i]["latit_in"];
     String longi_out = data[i]["longi_out"];
+    String start = data[i]["start"];
+    String finish = data[i]["finish"];
+    String pro = data[i]["pro"];
+    String trailer = data[i]["trailer"];
+    String action = data[i]["action"];
     String desc = data[i]["desc"];
+    String remarkin = data[i]["remarkin"];
     String pi_img=data[i]["checkin_img"].toString() == ''
         ? 'http://ubiattendance.ubihrm.com/assets/img/avatar.png'
         : data[i]["checkin_img"].toString();
@@ -208,8 +214,14 @@ List<Punch> createUserList(List data) {
         po_latit:latit_out,
         po_longi:longi_out,
         desc:desc.length>40?desc.substring(0,40)+'...':desc,
+        remarkin:remarkin.length>40?remarkin.substring(0,40)+'...':remarkin,
         pi_img: pi_img,
-        po_img: po_img
+        po_img: po_img,
+        start: start,
+        finish: finish,
+        pro: pro,
+        trailer: trailer,
+        action: action
     );
     list.add(punches);
   }
@@ -229,10 +241,16 @@ class Punch {
   String po_longi;
   String po_latit;
   String desc;
+  String remarkin;
   String pi_img;
   String po_img;
+  String start;
+  String finish;
+  String pro;
+  String trailer;
+  String action;
 
-  Punch({this.Id,this.Emp,this.client,this.pi_time,this.pi_loc,this.po_time,this.po_loc,this.pi_latit,this.pi_longi,this.po_latit,this.po_longi,this.desc,this.pi_img,this.po_img});
+  Punch({this.Id,this.Emp,this.client,this.pi_time,this.pi_loc,this.po_time,this.po_loc,this.pi_latit,this.pi_longi,this.po_latit,this.po_longi,this.desc,this.remarkin,this.pi_img,this.po_img,this.start,this.finish,this.pro,this.trailer,this.action});
 }
 
 ////////////////////////////////////////////////-----
@@ -1517,6 +1535,73 @@ addBulkAtt(List <grpattemp> data) async {
   var res = json.decode(response.body);
   print("--------> Adding Bulk Attendance" + res.toString());
   return res['sts'];
+}
+/////////////////////////Client CODE Start////////////////////////
+Future<List<Map>> getClientsDDList() async{
+  final prefs = await SharedPreferences.getInstance();
+  String orgid = prefs.getString('orgdir') ?? '';
+  final response = await http.get(globals.path +
+      'getClientsDDList?orgid=$orgid');
+  List data = json.decode(response.body.toString());
+  List<Map> clnts = createList(data,2); // -select label-
+  return clnts;
+}
+Future<int> addClient(company,name,phone,email,address,city,country,status,desc)
+async{
+  final prefs = await SharedPreferences.getInstance();
+  String empid = prefs.getString('empid') ?? '';
+  String orgdir = prefs.getString('orgdir') ?? '';
+  final response = await http.get(globals.path +
+      'addClient?uid=$empid&org_id=$orgdir&company=$company&name=$name&phone=$phone&email=$email&address=$address&city=$city&country=$country&status=$status&desc=$desc');
+  var res = json.decode(response.body);
+  print('Employee added'+res['error'].toString());
+  return res['sts'];
+}
+
+Future<List<Client>> getClients() async {
+  final prefs = await SharedPreferences.getInstance();
+  String orgid = prefs.getString('orgdir') ?? '';
+  print('getEmp called');
+  print(globals.path + 'getClients?refno=$orgid');
+  final response = await http.get(globals.path + 'getClients?refno=$orgid');
+  print(response.body);
+  print('fun end here1');
+  List responseJson = json.decode(response.body.toString());
+  // print('fun end here2');
+  List<Client> empList = createClientList(responseJson);
+  // print('fun end here3');
+//  print(empList);
+  return empList;
+}
+List<Client> createClientList(List data) {
+  // print('Create list called');
+  List<Client> list = new List();
+  for (int i = 0; i < data.length; i++) {
+    String name = data[i]["Name"];
+    String cont = data[i]["Contact"];
+    String company = data[i]["Company"];
+    String status = data[i]["status"] == '1' ? 'Active' : 'Inactive';
+    String id = data[i]["Id"];
+    //  print(name+'**'+dept+'**'+desg);
+    Client clt = new Client(
+        Name: name,
+        Contact: cont,
+        Company: company,
+        Status: status,
+        Id: id);
+    list.add(clt);
+  }
+  return list;
+}
+
+class Client {
+  String Name;
+  String Contact;
+  String Company;
+  String Status;
+  String Id;
+
+  Client({this.Name, this.Contact, this.Company, this.Status, this.Id});
 }
 ///////////////////////////////////////////////////////////
 ////////////////////////////group attendance ends///////////////////////////////

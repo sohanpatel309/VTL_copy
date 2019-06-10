@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
             navigateAfterSeconds: new ShrineApp(),
             title: new Text('',style: TextStyle(fontSize: 32.0),),
             loaderColor: Colors.blueGrey[100],
-            image:   Image.asset('assets/splash.gif'),
+            image:   Image.asset('assets/splash.png'),
             backgroundColor: Colors.white,
             styleTextUnderTheLoader: new TextStyle(color: Colors.grey[500]),
             photoSize: MediaQuery.of(context).size.width*0.45

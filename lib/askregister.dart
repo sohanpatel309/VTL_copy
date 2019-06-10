@@ -62,7 +62,7 @@ class _AskRegisterationPageState extends State<AskRegisterationPage> {
 
 
 
-                        SizedBox(height: 5.0),
+                       SizedBox(height: 5.0),
                         Row(
 
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -105,7 +105,6 @@ class _AskRegisterationPageState extends State<AskRegisterationPage> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                   ),
@@ -123,7 +122,7 @@ class _AskRegisterationPageState extends State<AskRegisterationPage> {
     setState(() {
       loader = true;
     });
-    var islogin = await dologin.markAttByQR(qr);
+    var islogin = await dologin.markAttByQR(qr,context);
     print(islogin);
     if(islogin=="success"){
       setState(() {

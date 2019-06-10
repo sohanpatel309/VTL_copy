@@ -71,6 +71,7 @@ flutter:
       - assets/logo.png
       - assets/spinner.gif
       - assets/splash.gif
+      - assets/splash.png
       - assets/launch_logo.png
       - assets/landing.png
       - assets/qr.png

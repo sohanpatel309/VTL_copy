@@ -10,6 +10,7 @@ import 'home.dart';
 import 'settings.dart';
 import 'profile.dart';
 import 'reports.dart';
+import 'visitdetails.dart';
 
 class VisitList extends StatefulWidget {
   @override
@@ -198,7 +199,7 @@ class _VisitList extends State<VisitList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.37,
+                    width: MediaQuery.of(context).size.width * 0.30,
                     child: Text(
                       'Client',
                       style: TextStyle(color: Colors.orange),
@@ -206,17 +207,22 @@ class _VisitList extends State<VisitList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.15,
+                    width: MediaQuery.of(context).size.width * 0.25,
                     child: Text('In',
                         style: TextStyle(color: Colors.orange),
                         textAlign: TextAlign.left),
+                  ),Container(
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    child: Text('Out',
+                        style: TextStyle(color: Colors.orange),
+                        textAlign: TextAlign.left),
                   ),
-                  Container(
+                  /*Container(
                     width: MediaQuery.of(context).size.width * 0.15,
                     child: Text('Out ',
                         style: TextStyle(color: Colors.orange),
                         textAlign: TextAlign.left),
-                  ),
+                  ),*/
                 ],
               ),
             ),
@@ -264,16 +270,20 @@ class _VisitList extends State<VisitList> {
                           children: <Widget>[
                             SizedBox(width: 8.0,),
                             new Container(
-                                width: MediaQuery.of(context).size.width * 0.20,
+                                width: MediaQuery.of(context).size.width * 0.15,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     new Text(
                                         snapshot.data[index].Emp.toString(),style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
+                                    /*new Text("In: "+snapshot.data[index].pi_time
+                                        .toString(),style: TextStyle(color: Colors.black54,fontSize: 12.0),),
+                                    new Text("Out: "+snapshot.data[index].po_time
+                                        .toString(),style: TextStyle(color: Colors.black54,fontSize: 12.0),),*/
                                   ],
                                 )),
                             new Container(
-                              width: MediaQuery.of(context).size.width * 0.37,
+                              width: MediaQuery.of(context).size.width * 0.30,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,33 +291,76 @@ class _VisitList extends State<VisitList> {
                                   new Text(
                                     snapshot.data[index].client.toString(),style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.left,
                                   ),
-                                  InkWell(
-                                    child:Text("In: "+
-                                      snapshot.data[index].pi_loc.toString(),style: TextStyle(color: Colors.black54,fontSize: 12.0),),
-                                    onTap: () {goToMap(snapshot.data[index].pi_latit,snapshot.data[index].pi_longi.toString());},
-                                  ),
-                                  InkWell(
-                                    child:Text("Out: "+
-                                      snapshot.data[index].po_loc.toString(),style: TextStyle(color: Colors.black54,fontSize: 12.0),),
-                                    onTap: () {goToMap(snapshot.data[index].po_latit.toString(),snapshot.data[index].po_longi.toString());},
-                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      child: new Container(
+                                        //width: MediaQuery.of(context).size.width*0.30,
+                                        height: 25.0,
+                                        decoration: new BoxDecoration(
+                                          color: Colors.orangeAccent,
+                                          border: new Border.all(color: Colors.white, width: 2.0),
+                                          borderRadius: new BorderRadius.circular(10.0),
+                                        ),
+                                        child: new Center(child: new Text('View Details', style: new TextStyle(fontSize: 12.0, color: Colors.white),),),
+                                      ),
+                                      onTap: (){
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => Visitdetails(mv: snapshot.data[index])),
+                                        );
+                                      },),
+                                  )
                                 ],
                               ),
-
 
                             ),
                             Container(
                                 width: MediaQuery
                                     .of(context)
                                     .size
-                                    .width * 0.18,
+                                    .width * 0.25,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment
-                                      .center,
+                                      .start,
                                   children: <Widget>[
-                                    Text(snapshot.data[index].pi_time
-                                        .toString(),style: TextStyle(fontWeight: FontWeight.bold),),
-                                    Container(
+                                    new Text(
+                                      snapshot.data[index].pi_time.toString(),style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.left,
+                                    ),
+                                    InkWell(
+                                      child:Text("In: "+
+                                          snapshot.data[index].pi_loc.toString(),style: TextStyle(color: Colors.black54,fontSize: 12.0),),
+                                      onTap: () {goToMap(snapshot.data[index].pi_latit,snapshot.data[index].pi_longi.toString());},
+                                    ),
+
+                                   /* Row(children: <Widget>[
+                                        Text("Odometer: ", style: TextStyle(fontWeight: FontWeight.bold)),
+
+                                    ]),
+                                    //Text("Odometer: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12.0),),
+                                    Row(children: <Widget>[
+                                    //  Text("Odometer: ", style: TextStyle(fontWeight: FontWeight.bold)),
+                                      Text(snapshot.data[index].start
+                                          .toString()+" - "+snapshot.data[index].finish
+                                          .toString(),style: TextStyle(color: Colors.black54,fontSize: 12.0),),
+                                    ]),
+
+                                    Row(children: <Widget>[
+                                      Text("Action: ", style: TextStyle(fontWeight: FontWeight.bold)),
+                                      Text(snapshot.data[index].action
+                                          .toString(),style: TextStyle(color: Colors.black54,fontSize: 12.0),),
+                                    ]),*/
+                                    /*Row(children: <Widget>[
+                                      Text("Pro#: ", style: TextStyle(fontWeight: FontWeight.bold)),
+                                      Text(snapshot.data[index].pro
+                                          .toString(),style: TextStyle(color: Colors.black54,fontSize: 12.0),),
+                                    ]),*/
+                                   /* Row(children: <Widget>[
+                                      Text("Trailer#: ", style: TextStyle(fontWeight: FontWeight.bold)),
+                                      Text(snapshot.data[index].trailer
+                                          .toString(),style: TextStyle(color: Colors.black54,fontSize: 12.0),),
+                                    ]),*/
+                                    /*Container(
                                       width: 62.0,
                                       height: 62.0,
                                       child: Container(
@@ -321,7 +374,7 @@ class _VisitList extends State<VisitList> {
                                                           .data[index]
                                                           .pi_img)
                                               )
-                                          )),),
+                                          )),),*/
 
                                   ],
                                 )
@@ -331,14 +384,19 @@ class _VisitList extends State<VisitList> {
                                 width: MediaQuery
                                     .of(context)
                                     .size
-                                    .width * 0.22,
+                                    .width * 0.25,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment
-                                      .center,
+                                      .start,
                                   children: <Widget>[
                                     Text(snapshot.data[index].po_time
                                         .toString(),style: TextStyle(fontWeight: FontWeight.bold),),
-                                    Container(
+                                    InkWell(
+                                      child:Text("Out: "+
+                                          snapshot.data[index].po_loc.toString(),style: TextStyle(color: Colors.black54,fontSize: 12.0),),
+                                      onTap: () {goToMap(snapshot.data[index].po_latit.toString(),snapshot.data[index].po_longi.toString());},
+                                    ),
+                                    /*Container(
                                       width: 62.0,
                                       height: 62.0,
                                       child: Container(
@@ -352,7 +410,7 @@ class _VisitList extends State<VisitList> {
                                                           .data[index]
                                                           .po_img)
                                               )
-                                          )),),
+                                          )),),*/
 
                                   ],
                                 )
@@ -360,11 +418,12 @@ class _VisitList extends State<VisitList> {
                             ),
                           ],
                         ),
-
+                      SizedBox(height: 10.0,),
                       Divider(
                         color: Colors.blueGrey.withOpacity(0.25),
                         height: 0.2,
                       ),
+                      SizedBox(height: 10.0,),
                     ]),
                     );
                   });

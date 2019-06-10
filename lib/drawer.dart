@@ -135,7 +135,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 color: Colors.orangeAccent,
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop();
-                  launchMap("https://ubiattendance.ubihrm.com/");
+                  launchMap(loginpath);
                 },
               ),
             ],
@@ -375,7 +375,7 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
             onTap: () {
               LaunchReview.launch(
-                  androidAppId: "org.ubitech.attendance"
+                  androidAppId: "org.ubitech.vtlattendance"
                   );
             },
           ),

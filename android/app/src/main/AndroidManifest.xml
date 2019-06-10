@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.ubitech.attendance" android:versionCode="30007" android:versionName="3.0.7">
+    package="org.ubitech.attendance" android:versionCode="10000" android:versionName="1.0.0">
 
     <!-- The INTERNET permission is required for development. Specifically,
          flutter needs it to communicate with the running application

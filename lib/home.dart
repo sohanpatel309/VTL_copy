@@ -43,6 +43,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   StreamLocation sl = new StreamLocation();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
+  final _formKey1 = GlobalKey<FormState>();
   /*var _defaultimage =
       new NetworkImage("http://ubiattendance.ubihrm.com/assets/img/avatar.png");*/
   var profileimage;
@@ -83,7 +85,9 @@ class _HomePageState extends State<HomePage> {
   String aid = "";
   String shiftId = "";
   List<Widget> widgets;
-
+  final _tractorno = TextEditingController();
+  final _start = TextEditingController();
+  final _finish = TextEditingController();
 
   @override
   void initState() {
@@ -219,8 +223,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     (mail_varified=='0' && alertdialogcount==0 && admin_sts=='1')?Future.delayed(Duration.zero, () => _showAlert(context)):"";
-
-    return (response == 0 || userpwd!=newpwd || Is_Delete!=0) ? new AskRegisterationPage() : getmainhomewidget();
+/*print('response'+response.toString());
+print('userpwd'+userpwd.toString());
+print('newpwd'+newpwd.toString());
+print('Is_Delete'+Is_Delete.toString());*/
+    return (response == 0 || Is_Delete!=0) ? new AskRegisterationPage() : getmainhomewidget();
 
     /* return MaterialApp(
       home: (response==0) ? new AskRegisterationPage() : getmainhomewidget(),
@@ -995,7 +1002,7 @@ class _HomePageState extends State<HomePage> {
         color: Colors.orangeAccent,
         onPressed: () {
           // //print("Time out button pressed");
-          saveImage();
+          _showTimeInDialog();
           //Navigator.pushNamed(context, '/home');
         },
       );
@@ -1006,7 +1013,7 @@ class _HomePageState extends State<HomePage> {
         color: Colors.orangeAccent,
         onPressed: () {
           // //print("Time out button pressed");
-          saveImage();
+          _showTimeOutDialog();
         },
       );
     }
@@ -1029,7 +1036,7 @@ class _HomePageState extends State<HomePage> {
     sl.startStreaming(5);
 
     MarkTime mk = new MarkTime(
-        empid, streamlocationaddr, aid, act1, shiftId, orgdir, lat, long);
+        empid, streamlocationaddr, aid, act1, shiftId, orgdir, lat, long, _start.text, _finish.text, _tractorno.text);
    /* mk1 = mk;*/
 
     var connectivityResult = await (new Connectivity().checkConnectivity());
@@ -1043,7 +1050,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         act1 = "";
       });
-      issave = await saveImage.saveTimeInOutImagePicker(mk);
+      issave = await saveImage.saveTimeInOutexceptimage(mk);
       ////print(issave);
       if (issave) {
         showDialog(context: context, child:
@@ -1177,4 +1184,151 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  _showTimeInDialog() async {
+    await showDialog<String>(
+      context: context,
+      child: new AlertDialog(
+        contentPadding: const EdgeInsets.all(16.0),
+        content: Container(
+          height: MediaQuery.of(context).size.height * 0.20,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                new Container(
+                  child: new TextFormField(
+                    // maxLines: 3,
+                    autofocus: true,
+                    controller: _start,
+                    keyboardType: TextInputType.number,
+                    decoration: new InputDecoration(
+                        labelText: 'Odometer Start ',
+                        hintText: 'Odometer Start Value'),
+                    validator: (String arg) {
+                      if (arg == '')
+                        return 'Odometer start is mandatory';
+                     /* else if (int.parse(arg.toString()) < int.parse(start))
+                        return 'Odometer finish must be greater than start';*/
+                      else
+                        return null;
+                    },
+                  ),
+                ),
+                new Expanded(
+                  child: new TextFormField(
+                   // maxLines: 3,
+                    //autofocus: true,
+                    controller: _tractorno,
+                    decoration: new InputDecoration(
+                        labelText: 'Tractor#',
+                        hintText: 'Tractor No.'),
+                    validator: (String arg) {
+                      if (arg == '')
+                        return 'Tractor no. is mandatory';
+                      else
+                        return null;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 4.0,
+                ),
+              ],
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          new FlatButton(
+              shape: Border.all(color: Colors.black54),
+              child: const Text(
+                'CANCEL',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                _start.text = '';
+                _tractorno.text = '';
+                Navigator.of(context, rootNavigator: true).pop();
+              }),
+          new RaisedButton(
+              child: const Text(
+                'Save',
+                style: TextStyle(color: Colors.white),
+              ),
+              color: Colors.orangeAccent,
+              onPressed: () {
+                if (_formKey.currentState.validate()) {
+                  Navigator.of(context, rootNavigator: true).pop();
+                  saveImage();
+                }
+              })
+        ],
+      ),
+    );
+  }
+  _showTimeOutDialog() async {
+    await showDialog<String>(
+      context: context,
+      child: new AlertDialog(
+        contentPadding: const EdgeInsets.all(16.0),
+        content: Container(
+          height: MediaQuery.of(context).size.height * 0.15,
+          child: Form(
+            key: _formKey1,
+            child: Column(
+              children: <Widget>[
+                new Container(
+                  child: new TextFormField(
+                    // maxLines: 3,
+                    autofocus: true,
+                    controller: _finish,
+                    keyboardType: TextInputType.number,
+                    decoration: new InputDecoration(
+                        labelText: 'Odometer Finish ',
+                        hintText: 'Odometer Finish Value'),
+                    validator: (String arg) {
+                      if (arg == '')
+                        return 'Odometer Finish is mandatory';
+                     /* else if (int.parse(arg.toString()) < int.parse(start))
+                        return 'Odometer finish must be greater than start';*/
+                      else
+                        return null;
+                    },
+                  ),
+                ),
+
+                SizedBox(
+                  height: 4.0,
+                ),
+              ],
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          new FlatButton(
+              shape: Border.all(color: Colors.black54),
+              child: const Text(
+                'CANCEL',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                _finish.text = '';
+               // _tractorno.text = '';
+                Navigator.of(context, rootNavigator: true).pop();
+              }),
+          new RaisedButton(
+              child: const Text(
+                'Save',
+                style: TextStyle(color: Colors.white),
+              ),
+              color: Colors.orangeAccent,
+              onPressed: () {
+                if (_formKey1.currentState.validate()) {
+                  Navigator.of(context, rootNavigator: true).pop();
+                  saveImage();
+                }
+              })
+        ],
+      ),
+    );
+  }
 }

@@ -24,6 +24,7 @@ import 'home.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'profile.dart';
 import 'reports.dart';
+import 'globals.dart';
 
 // This app is a stateful, it tracks the user's current choice.
 class PaymentPage extends StatefulWidget {
@@ -309,7 +310,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 color: Colors.orangeAccent,
                 onPressed: (){
                   if(buystatus=="1" && trialstatus=="2") {
-                    launchMap("https://ubiattendance.ubihrm.com/");
+                    launchMap(loginpath);
                   }
                   if(buystatus=="0") {
                     launchMap("http://buy.ubiattendance.com/index.php?id="+orgmail);

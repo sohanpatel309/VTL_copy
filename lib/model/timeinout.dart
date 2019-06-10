@@ -8,8 +8,11 @@ class MarkTime{
   String refid;
   String latit;
   String longi;
+  String start;
+  String finish;
+  String tractor;
 
-  MarkTime(this.uid, this.location, this.aid, this.act, this.shiftid, this.refid, this.latit, this.longi);
+  MarkTime(this.uid, this.location, this.aid, this.act, this.shiftid, this.refid, this.latit, this.longi, this.start, this.finish, this.tractor);
 
   MarkTime.fromMap(Map map){
     uid = map[uid];
@@ -20,6 +23,9 @@ class MarkTime{
     refid = map[refid];
     latit = map[latit];
     longi = map[longi];
+    start = map[start];
+    finish = map[finish];
+    tractor = map[tractor];
   }
   MarkTime.fromJson(Map map){
     uid = map[uid];
@@ -30,6 +36,9 @@ class MarkTime{
     refid = map[refid];
     latit = map[latit];
     longi = map[longi];
+    start = map[start];
+    finish = map[finish];
+    tractor = map[tractor];
   }
 
 
@@ -43,8 +52,14 @@ class MarkVisit{
   String refid;
   String latit;
   String longi;
+  String start;
+  String finish;
+  String pro;
+  String trailer;
+  String action;
+  String remarkin;
 
-  MarkVisit(this.uid,this.cid, this.location, this.refid, this.latit, this.longi);
+  MarkVisit(this.uid,this.cid, this.location, this.refid, this.latit, this.longi, this.start, this.finish, this.pro, this.trailer, this.action, this.remarkin);
 
   MarkVisit.fromMap(Map map){
     uid = map[uid];
@@ -53,6 +68,12 @@ class MarkVisit{
     refid = map[refid];
     latit = map[latit];
     longi = map[longi];
+    start = map[start];
+    finish = map[finish];
+    pro = map[pro];
+    trailer = map[trailer];
+    action = map[action];
+    remarkin = map[remarkin];
   }
   MarkVisit.fromJson(Map map){
     uid = map[uid];
@@ -61,6 +82,12 @@ class MarkVisit{
     refid = map[refid];
     latit = map[latit];
     longi = map[longi];
+    start = map[start];
+    finish = map[finish];
+    pro = map[pro];
+    trailer = map[trailer];
+    action = map[action];
+    remarkin = map[remarkin];
   }
 
 

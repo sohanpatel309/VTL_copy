@@ -623,7 +623,7 @@ class _TimeOff_New extends State<TimeOff_New> {
     sl.startStreaming(5);
     client = _clientname.text;
     MarkVisit mk = new MarkVisit(
-        empid,client, streamlocationaddr, orgdir, lat, long);
+        empid,client, streamlocationaddr, orgdir, lat, long, streamlocationaddr, orgdir, lat, long, long, long);
     /* mk1 = mk;*/
 
     var connectivityResult = await (new Connectivity().checkConnectivity());

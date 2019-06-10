@@ -42,7 +42,7 @@ class _ShrineAppState extends State<ShrineApp> {
   int response;
   int responsestate;
   int mand_login=0; // mandatory update is false by default.
-  String cur_ver='3.0.7',new_ver='3.0.7';
+  String cur_ver='1.0.0',new_ver='1.0.0';
   Widget _defaultHome = new LoginPage();
   @override
   void initState() {
@@ -69,7 +69,7 @@ class _ShrineAppState extends State<ShrineApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ubiAttendance',
+      title: 'VTLTransport',
       home: (cur_ver == new_ver)?HomePage():CheckUpdate(),
       //home: (true)?HomePage():CheckUpdate(),
       routes: {

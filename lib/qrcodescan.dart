@@ -32,7 +32,6 @@ class _ScanQRCodeState extends State<ScanQRCode> {
               ],
             ),
           ));
-
   }
 
   Future scan() async {

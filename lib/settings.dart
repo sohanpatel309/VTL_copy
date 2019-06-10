@@ -105,7 +105,7 @@ class _Settings extends State<Settings> {
                 color: Colors.orangeAccent,
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop();
-                  launchMap("https://ubiattendance.ubihrm.com/");
+                  launchMap(loginpath);
                 },
               ),
             ],
